@@ -5,6 +5,7 @@ class Character
     public $name;
     private $lifePoints = 100;
     public $rhinoshield = false;
+    public $lastAttack;
     //public $attack;
 
     function __construct(string $name) {
@@ -31,11 +32,11 @@ class Character
 
     public function attack(Character $target) {
         if($this->useRhinoshield($target)) {
+            $target->setLifePoints(0);
+            return;
         }else {
-            $attack = rand(5, 15);
-            $target->setLifePoints($attack);
-            $status = "$this->name attaque {$target->name}! Il reste {$target->getLifePoints()} à {$target->name} !";
-            return $status;
+        $target->setLifePoints($this->choiceAttack());
+        return;
         }
     }
 }
